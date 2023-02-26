@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - mariadb:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=secret
+    networks:
+      - db
+
+  phpadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_PORT=3306
+    networks:
+      - db
+
+volumes:
+  mariadb:
+
+networks:
+  db:
+    driver: bridge
