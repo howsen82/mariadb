@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mariadb:
+    container_name: mariadb
+    image: mariadb
+    restart: always
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    volumes:
+      - db_data:/var/lib/mysql
+      - /var/lib/mysql/data:${MARIADB_DATA_DIR}
+      - /var/lib/mysql/logs:${MARIADB_LOG_DIR}
+      - /var/docker/mariadb/conf:/etc/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
